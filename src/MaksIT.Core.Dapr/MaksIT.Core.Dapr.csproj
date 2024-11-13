@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet package metadata -->
+    <PackageId>MaksIT.Core.Dapr</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Maksym Sadovnychyy</Authors>
+    <Company>MAKS-IT</Company>
+    <Product>MaksIT.Core.Dapr</Product>
+    <Description>MaksIT.Core.Dapr is a facade library for Dapr.</Description>
+    <PackageTags>dotnet;dapr;</PackageTags>
+    <RepositoryUrl>https://github.com/MAKS-IT-COM/maksit-core-dapr</RepositoryUrl>
+    <License>MIT</License>
+    <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.14.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.14.0" />
+    <PackageReference Include="MaksIT.Results" Version="1.0.5" />
+  </ItemGroup>
+
+</Project>
