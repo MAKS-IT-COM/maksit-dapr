@@ -11,7 +11,7 @@ public interface IDaprPublisherService {
 }
 
 public interface IDaprStateStoreService {
-  Task<Result> SaveStateAsync<T>(string storeName, string key, T value);
+  Task<Result> SetStateAsync<T>(string storeName, string key, T value);
   Task<Result<T?>> GetStateAsync<T>(string storeName, string key);
   Task<Result> DeleteStateAsync(string storeName, string key);
 }
@@ -56,7 +56,7 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
   /// <param name="key"></param>
   /// <param name="value"></param>
   /// <returns></returns>
-  public async Task<Result> SaveStateAsync<T>(string storeName, string key, T value) {
+  public async Task<Result> SetStateAsync<T>(string storeName, string key, T value) {
     try {
       await _client.SaveStateAsync(storeName, key, value);
       return Result.Ok();
@@ -77,6 +77,9 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
   public async Task<Result<T?>> GetStateAsync<T>(string storeName, string key) {
     try {
       var state = await _client.GetStateAsync<T?>(storeName, key);
+      if (state == null)
+        return Result<T?>.NotFound(default, $"State from the store {storeName} with the {key} not found.");
+
       return Result<T?>.Ok(state);
     }
     catch (Exception ex) {
