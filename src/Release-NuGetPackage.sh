@@ -13,7 +13,7 @@ nugetSource="https://api.nuget.org/v3/index.json"
 # Define paths
 scriptDir=$(dirname "$0")
 solutionDir=$(realpath "$scriptDir")
-projectDir="$solutionDir/MaksIT.Core.Dapr"
+projectDir="$solutionDir/MaksIT.Dapr"
 outputDir="$projectDir/bin/Release"
 
 # Clean previous builds

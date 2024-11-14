@@ -10,7 +10,7 @@ $nugetSource = "https://api.nuget.org/v3/index.json"
 
 # Define paths
 $solutionDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$projectDir = "$solutionDir\MaksIT.Core.Dapr"
+$projectDir = "$solutionDir\MaksIT.Dapr"
 $outputDir = "$projectDir\bin\Release"
 
 # Clean previous builds

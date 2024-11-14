@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
 
-namespace MaksIT.Core.Dapr.Extensions;
+namespace MaksIT.Dapr.Extensions;
 public static class WebApplicationExtensions {
 
   /// <summary>

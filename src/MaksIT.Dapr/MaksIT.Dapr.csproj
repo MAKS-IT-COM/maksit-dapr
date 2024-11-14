@@ -6,12 +6,12 @@
     <Nullable>enable</Nullable>
 
     <!-- NuGet package metadata -->
-    <PackageId>MaksIT.Core.Dapr</PackageId>
-    <Version>1.0.3</Version>
+    <PackageId>MaksIT.Dapr</PackageId>
+    <Version>1.0.4</Version>
     <Authors>Maksym Sadovnychyy</Authors>
     <Company>MAKS-IT</Company>
-    <Product>MaksIT.Core.Dapr</Product>
-    <Description>MaksIT.Core.Dapr is a facade library for Dapr.</Description>
+    <Product>MaksIT.Dapr</Product>
+    <Description>MaksIT.Dapr is a facade library for Dapr.</Description>
     <PackageTags>dotnet;dapr;</PackageTags>
     <RepositoryUrl>https://github.com/MAKS-IT-COM/maksit-core-dapr</RepositoryUrl>
     <License>MIT</License>

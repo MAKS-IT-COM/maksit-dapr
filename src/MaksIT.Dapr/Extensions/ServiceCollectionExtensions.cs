@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace MaksIT.Core.Dapr.Extensions;
+namespace MaksIT.Dapr.Extensions;
 public static class ServiceCollectionExtensions {
   public static void RegisterPublisher(this IServiceCollection services) {
     services.AddDaprClient();
