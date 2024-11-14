@@ -5,14 +5,18 @@ using Dapr.Client;
 using MaksIT.Results;
 
 namespace MaksIT.Core.Dapr;
-public interface IDaprService {
+
+public interface IDaprPublisherService {
   Task<Result> PublishEventAsync(string pubSubName, string topicName, string payload);
+}
+
+public interface IDaprStateStoreService {
   Task<Result> SaveStateAsync<T>(string storeName, string key, T value);
   Task<Result<T?>> GetStateAsync<T>(string storeName, string key);
   Task<Result> DeleteStateAsync(string storeName, string key);
 }
 
-public class DaprService : IDaprService {
+public class DaprService : IDaprPublisherService, IDaprStateStoreService {
   private const string _errorMessage = "MaksIT.Core.Dapr - Data provider error";
 
   private readonly DaprClient _client;
