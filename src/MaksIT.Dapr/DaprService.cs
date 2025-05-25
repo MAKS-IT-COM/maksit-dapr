@@ -39,7 +39,17 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
   /// <returns></returns>
   public async Task<Result> PublishEventAsync(string pubSubName, string topicName, string payload) {
     try {
-      await _client.PublishEventAsync(pubSubName, topicName, payload);
+
+      var traceId = System.Diagnostics.Activity.Current?.TraceId.ToString();
+
+      if (!string.IsNullOrEmpty(traceId)) {
+        var metadata = new Dictionary<string, string> { ["traceid"] = traceId };
+        await _client.PublishEventAsync(pubSubName, topicName, payload, metadata);
+      }
+      else {
+        await _client.PublishEventAsync(pubSubName, topicName, payload);
+      }
+
       return Result.Ok();
     }
     catch (Exception ex) {
