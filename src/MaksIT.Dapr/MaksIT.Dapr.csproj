@@ -7,7 +7,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>MaksIT.Dapr</PackageId>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <Authors>Maksym Sadovnychyy</Authors>
     <Company>MAKS-IT</Company>
     <Product>MaksIT.Dapr</Product>
@@ -17,16 +17,20 @@
     <License>MIT</License>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="" />
+    <None Include="../../LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.15.4" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.15.4" />
-    <PackageReference Include="MaksIT.Results" Version="1.0.6" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.16.0" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.16.0" />
+    <PackageReference Include="Dapr.Workflow" Version="1.16.0" />
+    <PackageReference Include="MaksIT.Core" Version="1.5.1" />
+    <PackageReference Include="MaksIT.Results" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

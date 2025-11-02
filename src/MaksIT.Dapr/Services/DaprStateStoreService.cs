@@ -3,61 +3,29 @@
 using Dapr.Client;
 
 using MaksIT.Results;
+using MaksIT.Core.Extensions;
 
-namespace MaksIT.Dapr;
-
-public interface IDaprPublisherService {
-  Task<Result> PublishEventAsync(string pubSubName, string topicName, string payload);
-}
-
+namespace MaksIT.Dapr.Services;
 public interface IDaprStateStoreService {
   Task<Result> SetStateAsync<T>(string storeName, string key, T value);
   Task<Result<T?>> GetStateAsync<T>(string storeName, string key);
   Task<Result> DeleteStateAsync(string storeName, string key);
 }
 
-public class DaprService : IDaprPublisherService, IDaprStateStoreService {
+
+public class DaprStateStoreService : IDaprStateStoreService {
   private const string _errorMessage = "MaksIT.Dapr - Data provider error";
 
   private readonly DaprClient _client;
-  private readonly ILogger<DaprService> _logger;
+  private readonly ILogger<DaprStateStoreService> _logger;
 
-  public DaprService(
-    ILogger<DaprService> logger,
+  public DaprStateStoreService(
+    ILogger<DaprStateStoreService> logger,
     DaprClient client
   ) {
     _logger = logger;
     _client = client;
   }
-
-  /// <summary>
-  /// Publishes an event to a Dapr topic
-  /// </summary>
-  /// <param name="pubSubName"></param>
-  /// <param name="topicName"></param>
-  /// <param name="payload"></param>
-  /// <returns></returns>
-  public async Task<Result> PublishEventAsync(string pubSubName, string topicName, string payload) {
-    try {
-
-      var traceId = System.Diagnostics.Activity.Current?.TraceId.ToString();
-
-      if (!string.IsNullOrEmpty(traceId)) {
-        var metadata = new Dictionary<string, string> { ["traceid"] = traceId };
-        await _client.PublishEventAsync(pubSubName, topicName, payload, metadata);
-      }
-      else {
-        await _client.PublishEventAsync(pubSubName, topicName, payload);
-      }
-
-      return Result.Ok();
-    }
-    catch (Exception ex) {
-      _logger.LogError(ex, _errorMessage);
-      return Result.InternalServerError(ex.Message);
-    }
-  }
-
   /// <summary>
   /// Saves a state to a Dapr state store
   /// </summary>
@@ -73,7 +41,7 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
     }
     catch (Exception ex) {
       _logger.LogError(ex, _errorMessage);
-      return Result.InternalServerError(ex.Message);
+      return Result.InternalServerError(new[] {_errorMessage}.Concat(ex.ExtractMessages()).ToArray());
     }
   }
 
@@ -94,7 +62,7 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
     }
     catch (Exception ex) {
       _logger.LogError(ex, _errorMessage);
-      return Result<T?>.InternalServerError(default, ex.Message);
+      return Result<T?>.InternalServerError(default, new[] {_errorMessage}.Concat(ex.ExtractMessages()).ToArray());
     }
   }
 
@@ -111,7 +79,7 @@ public class DaprService : IDaprPublisherService, IDaprStateStoreService {
     }
     catch (Exception ex) {
       _logger.LogError(ex, _errorMessage);
-      return Result.InternalServerError(ex.Message);
+      return Result.InternalServerError([_errorMessage, .. ex.ExtractMessages()]);
     }
   }
 }
