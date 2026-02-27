@@ -1,26 +1,27 @@
 # MaksIT.Dapr
 
+![Line Coverage](assets/badges/coverage-lines.svg) ![Branch Coverage](assets/badges/coverage-branches.svg) ![Method Coverage](assets/badges/coverage-methods.svg)
+
 This repository hosts the `maksit-dapr` project, which utilizes [Dapr](https://dapr.io/) (Distributed Application Runtime) to facilitate building and managing microservices with ease. The project focuses on implementing a robust, scalable solution leveraging Dapr's building blocks and abstractions.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
+- [MaksIT.Dapr](#maksitdapr)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
   - [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-  - [Running the Project](#running-the-project)
-  - [Environment Variables](#environment-variables)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+  - [Usage](#usage)
+    - [Registering Dapr Services](#registering-dapr-services)
+    - [Injecting and Using Dapr Services](#injecting-and-using-dapr-services)
+  - [Contributing](#contributing)
+  - [Contact](#contact)
+  - [License](#license)
 
 ## Overview
 
-`maksit-dapr` serves as a foundational project to explore and implement Dapr-based microservices, demonstrating the integration of Dapr’s pub-sub, bindings, state management, and other building blocks in a distributed system environment.
+`maksit-dapr` serves as a foundational project to explore and implement Dapr-based microservices, demonstrating the integration of Daprï¿½s pub-sub, bindings, state management, and other building blocks in a distributed system environment.
 
 ## Features
 
@@ -176,32 +177,4 @@ If you have any questions or need further assistance, feel free to reach out:
 
 ## License
 
-This project is licensed under the MIT License. See the full license text below.
-
----
-
-### MIT License
-
-```
-MIT License
-
-Copyright (c) 2024 Maksym Sadovnychyy (MAKS-IT)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+See `LICENSE.md`.

@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
     <!-- NuGet package metadata -->
     <PackageId>MaksIT.Dapr</PackageId>
-    <Version>1.0.8</Version>
+    <Version>2.0.0</Version>
     <Authors>Maksym Sadovnychyy</Authors>
     <Company>MAKS-IT</Company>
     <Product>MaksIT.Dapr</Product>
@@ -21,16 +21,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="../../README.md" Pack="true" PackagePath="" />
-    <None Include="../../LICENSE.md" Pack="true" PackagePath="" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.16.1" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.16.1" />
+    <PackageReference Include="Dapr.Workflow" Version="1.16.1" />
+    <PackageReference Include="MaksIT.Core" Version="1.6.4" />
+    <PackageReference Include="MaksIT.Results" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.16.0" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.16.0" />
-    <PackageReference Include="Dapr.Workflow" Version="1.16.0" />
-    <PackageReference Include="MaksIT.Core" Version="1.5.1" />
-    <PackageReference Include="MaksIT.Results" Version="1.1.0" />
+    <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" Link="LICENSE.md" />
+    <None Include="..\..\README.md"  Pack="true" PackagePath="\" Link="README.md" />
+    <None Include="..\..\CHANGELOG.md" Pack="true" PackagePath="\" Link="CHANGELOG.md" />
+
+    <None Include="..\..\assets\badges\**\*" Link="assets\badges\%(RecursiveDir)%(Filename)%(Extension)">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

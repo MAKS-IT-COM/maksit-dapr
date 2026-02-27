@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="MaksIT.Dapr.Tests/MaksIT.Dapr.Tests.csproj" />
+  <Project Path="MaksIT.Dapr/MaksIT.Dapr.csproj" />
+</Solution>
