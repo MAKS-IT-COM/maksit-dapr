@@ -72,24 +72,22 @@ This project follows [Semantic Versioning](https://semver.org/):
 
 ## Utility Scripts
 
-Scripts are located under `utils/`.
+Automation lives under `src/` (synced from [maksit-repoutils](https://github.com/MAKS-IT-COM/maksit-repoutils) via `Update-RepoUtils`). Product-specific settings are in each engine’s `scriptSettings.json`.
 
-### Generate Coverage Badges
-
-Runs tests with coverage and generates SVG badges in `assets/badges/`.
+### Run tests and coverage badges
 
 ```powershell
-.\utils\Generate-CoverageBadges\Generate-CoverageBadges.ps1
+pwsh -File .\src\engines\test\Invoke-TestEngine.ps1
 ```
 
-Configuration: `utils/Generate-CoverageBadges/scriptsettings.json`
+Configuration: `src/engines/test/scriptSettings.json`
 
-### Release NuGet Package
+### Release package
 
 Builds, tests, packs, and publishes to NuGet and GitHub release flows.
 
 ```powershell
-.\utils\Release-NuGetPackage\Release-NuGetPackage.ps1
+pwsh -File .\src\engines\release\Invoke-ReleasePackage.ps1
 ```
 
 Prerequisites:
@@ -99,15 +97,23 @@ Prerequisites:
 - environment variable `NUGET_MAKS_IT`
 - environment variable `GITHUB_MAKS_IT_COM`
 
-Configuration: `utils/Release-NuGetPackage/scriptsettings.json`
+Configuration: `src/engines/release/scriptSettings.json`
 
-### Force Amend Tagged Commit
+### Update repo utilities
+
+Refreshes `src/` from maksit-repoutils while preserving local `scriptSettings.json` files.
+
+```powershell
+pwsh -File .\src\tools\Update-RepoUtils\Update-RepoUtils.ps1
+```
+
+### Force amend tagged commit
 
 Amends the latest tagged commit and force-pushes updated branch and tag.
 
 ```powershell
-.\utils\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1
-.\utils\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1 -DryRun
+pwsh -File .\src\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1
+pwsh -File .\src\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1 -DryRun
 ```
 
 Warning: this rewrites git history.
