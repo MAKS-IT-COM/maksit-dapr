@@ -5,12 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.1] - 2026-06-28
 
 ### Changed
-- Migrated repository automation from `utils/` to `src/` (maksit-repoutils layout). Configure release and test flows in `src/engines/*/scriptSettings.json`.
+- Restored repository automation under `utils/` (aligned with maksit-core and maksit-repoutils). Configure release and test flows in `utils/engines/*/scriptSettings.json`.
+- Updated dependencies to Dapr `1.18.4`, `MaksIT.Core` `1.6.8`, and `MaksIT.Results` `2.0.3`.
 
-## v2.0.0 - 2026-02-22
+## [2.0.0] - 2026-02-22
 
 ### Added
 - Dedicated test project (`MaksIT.Dapr.Tests`) with coverage for publisher and state-store service behavior.

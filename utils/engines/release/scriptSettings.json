@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "Release Package Script Settings",
+  "description": "Invoke-ReleasePackage.ps1 plugin settings for maksit-dapr.",
+  "plugins": [
+    {
+      "name": "DotNetReleaseVersion",
+      "stageLabel": "build",
+      "enabled": true,
+      "projectFiles": [
+        "..\\..\\..\\src\\MaksIT.Dapr\\MaksIT.Dapr.csproj"
+      ]
+    },
+    {
+      "name": "DotNetTest",
+      "stageLabel": "test",
+      "enabled": true,
+      "project": "..\\..\\..\\src\\MaksIT.Dapr.Tests",
+      "resultsDir": "..\\..\\..\\testResults"
+    },
+    {
+      "name": "QualityGate",
+      "stageLabel": "qualityGate",
+      "enabled": true,
+      "coverageThreshold": 0,
+      "failOnVulnerabilities": true,
+      "projectFiles": [
+        "..\\..\\..\\src\\MaksIT.Dapr\\MaksIT.Dapr.csproj"
+      ]
+    },
+    {
+      "name": "DotNetPack",
+      "stageLabel": "build",
+      "enabled": true,
+      "projectFiles": [
+        "..\\..\\..\\src\\MaksIT.Dapr\\MaksIT.Dapr.csproj"
+      ],
+      "artifactsDir": "..\\..\\..\\release"
+    },
+    {
+      "name": "DotNetCreateArchive",
+      "stageLabel": "build",
+      "enabled": true,
+      "zipNamePattern": "maksit.dapr-{version}.zip"
+    },
+    {
+      "name": "ReleasePublishGuard",
+      "stageLabel": "release",
+      "enabled": true,
+      "branches": [
+        "main"
+      ],
+      "requireExactTagOnHead": true,
+      "tagVersionMustMatchDotNetRelease": true,
+      "whenRequirementsNotMet": "skip",
+      "requireCleanWorkingTree": false,
+      "ensureTagOnRemote": true,
+      "remoteName": "origin"
+    },
+    {
+      "name": "GitHub",
+      "stageLabel": "release",
+      "enabled": true,
+      "githubToken": "GITHUB_MAKS_IT_COM",
+      "repository": "https://github.com/MAKS-IT-COM/maksit-core-dapr",
+      "releaseNotesFile": "..\\..\\..\\CHANGELOG.md",
+      "releaseTitlePattern": "Release {version}"
+    },
+    {
+      "name": "DotNetNuGet",
+      "stageLabel": "release",
+      "enabled": true,
+      "nugetApiKey": "NUGET_MAKS_IT",
+      "source": "https://api.nuget.org/v3/index.json"
+    },
+    {
+      "name": "NpmReleaseVersion",
+      "stageLabel": "build",
+      "enabled": false,
+      "packageJsonPath": "..\\..\\..\\src\\package.json",
+      "syncWorkspaceVersions": true
+    },
+    {
+      "name": "NpmBuild",
+      "stageLabel": "build",
+      "enabled": false,
+      "workspaceRoot": "..\\..\\..\\src",
+      "useCi": true,
+      "buildScript": "build"
+    },
+    {
+      "name": "NpmPublish",
+      "stageLabel": "release",
+      "enabled": false,
+      "npmApiKey": "NPMJS_MAKS_IT",
+      "registry": "https://registry.npmjs.org",
+      "access": "public",
+      "workspaceRoot": "..\\..\\..\\src",
+      "publishOrder": []
+    },
+    {
+      "name": "DotNetDockerPush",
+      "stageLabel": "release",
+      "enabled": false,
+      "registryUrl": "cr.maks-it.com",
+      "credentialsEnvVar": "CR_MAKS_IT",
+      "projectName": "my-service",
+      "contextPath": "..\\..\\..\\src",
+      "pushLatest": true,
+      "images": []
+    },
+    {
+      "name": "DotNetHelmPush",
+      "stageLabel": "release",
+      "enabled": false,
+      "chartPath": "..\\..\\..\\helm\\my-service",
+      "ociRepository": "oci://cr.maks-it.com/charts",
+      "credentialsEnvVar": "CR_MAKS_IT",
+      "pushLatest": false
+    },
+    {
+      "name": "DotNetCleanupArtifacts",
+      "stageLabel": "release",
+      "enabled": true,
+      "includePatterns": [
+        "*"
+      ],
+      "excludePatterns": [
+        "*.zip"
+      ]
+    }
+  ]
+}

@@ -72,23 +72,27 @@ This project follows [Semantic Versioning](https://semver.org/):
 
 ## Utility Scripts
 
-Automation lives under `src/` (synced from [maksit-repoutils](https://github.com/MAKS-IT-COM/maksit-repoutils) via `Update-RepoUtils`). Product-specific settings are in each engine’s `scriptSettings.json`.
+Automation lives under `utils/` (synced from [maksit-repoutils](https://github.com/MAKS-IT-COM/maksit-repoutils) via `Update-RepoUtils`). Product-specific settings are in each engine’s `scriptSettings.json`.
 
 ### Run tests and coverage badges
 
 ```powershell
-pwsh -File .\src\engines\test\Invoke-TestEngine.ps1
+pwsh -File .\utils\engines\test\Invoke-TestEngine.ps1
 ```
 
-Configuration: `src/engines/test/scriptSettings.json`
+Or double-click `utils\Invoke-TestEngine.bat`.
+
+Configuration: `utils/engines/test/scriptSettings.json`
 
 ### Release package
 
 Builds, tests, packs, and publishes to NuGet and GitHub release flows.
 
 ```powershell
-pwsh -File .\src\engines\release\Invoke-ReleasePackage.ps1
+pwsh -File .\utils\engines\release\Invoke-ReleasePackage.ps1
 ```
+
+Or double-click `utils\Invoke-ReleasePackage.bat`.
 
 Prerequisites:
 
@@ -97,23 +101,25 @@ Prerequisites:
 - environment variable `NUGET_MAKS_IT`
 - environment variable `GITHUB_MAKS_IT_COM`
 
-Configuration: `src/engines/release/scriptSettings.json`
+Configuration: `utils/engines/release/scriptSettings.json`
 
 ### Update repo utilities
 
-Refreshes `src/` from maksit-repoutils while preserving local `scriptSettings.json` files.
+Refreshes `utils/` from maksit-repoutils while preserving local `scriptSettings.json` files.
 
 ```powershell
-pwsh -File .\src\tools\Update-RepoUtils\Update-RepoUtils.ps1
+pwsh -File .\utils\tools\Update-RepoUtils\Update-RepoUtils.ps1
 ```
+
+Or double-click `utils\Update-RepoUtils.bat`.
 
 ### Force amend tagged commit
 
 Amends the latest tagged commit and force-pushes updated branch and tag.
 
 ```powershell
-pwsh -File .\src\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1
-pwsh -File .\src\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1 -DryRun
+pwsh -File .\utils\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1
+pwsh -File .\utils\tools\Force-AmendTaggedCommit\Force-AmendTaggedCommit.ps1 -DryRun
 ```
 
 Warning: this rewrites git history.

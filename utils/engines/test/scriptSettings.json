@@ -11,7 +11,7 @@
       "stageLabel": "test",
       "enabled": true,
       "projects": [
-        "..\\..\\MaksIT.Dapr.Tests"
+        "..\\..\\..\\src\\MaksIT.Dapr.Tests"
       ]
     },
     {
