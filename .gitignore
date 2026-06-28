@@ -264,3 +264,9 @@ __pycache__/
 
 **/*docker-compose/LetsEncryptServer/acme
 **/*docker-compose/LetsEncryptServer/cache
+#Custom
+![Uu]tils/**
+
+# Generated test reports (RepoUtils)
+test-results/
+utils/tests/results/

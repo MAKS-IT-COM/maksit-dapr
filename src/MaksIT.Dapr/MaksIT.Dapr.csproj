@@ -7,7 +7,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>MaksIT.Dapr</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <Authors>Maksym Sadovnychyy</Authors>
     <Company>MAKS-IT</Company>
     <Product>MaksIT.Dapr</Product>
@@ -21,11 +21,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.17.9" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.17.9" />
-    <PackageReference Include="Dapr.Workflow" Version="1.17.9" />
-    <PackageReference Include="MaksIT.Core" Version="1.6.7" />
-    <PackageReference Include="MaksIT.Results" Version="2.0.2" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.18.4" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.18.4" />
+    <PackageReference Include="Dapr.Workflow" Version="1.18.4" />
+    <PackageReference Include="MaksIT.Core" Version="1.6.8" />
+    <PackageReference Include="MaksIT.Results" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
