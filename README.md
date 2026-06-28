@@ -1,6 +1,8 @@
 # MaksIT.Dapr
 
-![Line Coverage](assets/badges/coverage-lines.svg) ![Branch Coverage](assets/badges/coverage-branches.svg) ![Method Coverage](assets/badges/coverage-methods.svg)
+![Line Coverage](https://img.shields.io/badge/Line%20Coverage-62.1%25-green)
+![Branch Coverage](https://img.shields.io/badge/Branch%20Coverage-50%25-yellowgreen)
+![Method Coverage](https://img.shields.io/badge/Method%20Coverage-60%25-green)
 
 This repository hosts the `maksit-dapr` project, which utilizes [Dapr](https://dapr.io/) (Distributed Application Runtime) to facilitate building and managing microservices with ease. The project focuses on implementing a robust, scalable solution leveraging Dapr's building blocks and abstractions.
 
