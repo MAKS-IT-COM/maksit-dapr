@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-07-30
+
+### Added
+- **HA work leases via Dapr state:** `IDaprWorkLeaseStore` / `DaprWorkLeaseStore` (acquire, renew, release, get) using ETag concurrency — broker-agnostic (NATS KV / Postgres / other state Component).
+- **State ETag API:** `GetStateAndETagAsync` and `TrySaveStateAsync` on `IDaprStateStoreService`.
+- **Runtime instance id:** `IDaprRuntimeInstanceId` / `DaprRuntimeInstanceIdProvider` (`POD_NAME` in Kubernetes).
+- **Pub/sub worker helpers:** `IDaprPubSubWorkHandler<T>`, `DaprPubSubAcceptOutcome` / `DaprPubSubAcceptResult`, `DaprPubSubAck` (HTTP ACK/NAK mapping).
+- DI: `RegisterWorkLeases()` registers state store + lease store + instance id.
+
+### Changed
+- Package version **2.1.0**.
+
 ## [2.0.1] - 2026-06-28
 
 ### Changed
@@ -25,27 +37,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Legacy root-level release scripts (`Release-NuGetPackage.*`) in favor of the `utils/Release-NuGetPackage/` flow.
-
-<!-- 
-Template for new releases:
-
-## v1.x.x
-
-### Added
-- New features
-
-### Changed
-- Changes in existing functionality
-
-### Deprecated
-- Soon-to-be removed features
-
-### Removed
-- Removed features
-
-### Fixed
-- Bug fixes
-
-### Security
-- Security improvements
--->

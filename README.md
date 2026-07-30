@@ -1,8 +1,8 @@
 # MaksIT.Dapr
 
-![Line Coverage](https://img.shields.io/badge/Line%20Coverage-62.1%25-green)
-![Branch Coverage](https://img.shields.io/badge/Branch%20Coverage-50%25-yellowgreen)
-![Method Coverage](https://img.shields.io/badge/Method%20Coverage-60%25-green)
+![Line Coverage](https://img.shields.io/badge/Line%20Coverage-41.3%25-yellowgreen)
+![Branch Coverage](https://img.shields.io/badge/Branch%20Coverage-25%25-yellow)
+![Method Coverage](https://img.shields.io/badge/Method%20Coverage-53.1%25-yellowgreen)
 
 This repository hosts the `maksit-dapr` project, which utilizes [Dapr](https://dapr.io/) (Distributed Application Runtime) to facilitate building and managing microservices with ease. The project focuses on implementing a robust, scalable solution leveraging Dapr's building blocks and abstractions.
 
@@ -67,6 +67,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Register Dapr services
 builder.Services.RegisterPublisher();
 builder.Services.RegisterStateStore();
+// HA coordination (leases via Dapr state Component — e.g. persistent NATS KV)
+builder.Services.RegisterWorkLeases();
 
 var app = builder.Build();
 
@@ -166,6 +168,28 @@ public class MyService
 
 This setup enables your ASP.NET Core application to utilize Dapr's pub-sub, state management, and other building blocks with minimal boilerplate.
 
+### HA work leases (multi-replica)
+
+Use Dapr **state** (not product DB lock tables) for bootstrap/sweep/holder coordination. The state Component is infrastructure (e.g. persistent NATS JetStream KV); application code stays broker-agnostic.
+
+```csharp
+builder.Services.RegisterWorkLeases();
+
+// inject IDaprWorkLeaseStore + IDaprRuntimeInstanceId
+var acquired = await leases.TryAcquireAsync(
+  storeName: "maksit-cicd-state",
+  workKey: "bootstrap",
+  holderId: runtimeInstance.InstanceId,
+  ttl: TimeSpan.FromMinutes(5),
+  ct);
+
+if (acquired is { IsSuccess: true, Value: true }) {
+  try { /* exclusive work */ }
+  finally { await leases.ReleaseAsync("maksit-cicd-state", "bootstrap", runtimeInstance.InstanceId, CancellationToken.None); }
+}
+```
+
+Pub/sub workers: implement `IDaprPubSubWorkHandler<T>` and map with `DaprPubSubAck.ToActionResult` (2xx ACK, 503 Busy → redelivery).
 
 ## Contributing
 
