@@ -1,85 +1,93 @@
-﻿using Microsoft.Extensions.Logging;
-
-using Dapr.Client;
-
-using MaksIT.Results;
+﻿using Dapr.Client;
 using MaksIT.Core.Extensions;
+using MaksIT.Results;
+using Microsoft.Extensions.Logging;
+
 
 namespace MaksIT.Dapr.Services;
+
 public interface IDaprStateStoreService {
   Task<Result> SetStateAsync<T>(string storeName, string key, T value);
   Task<Result<T?>> GetStateAsync<T>(string storeName, string key);
+  Task<Result<(T? Value, string? ETag)>> GetStateAndETagAsync<T>(string storeName, string key, CancellationToken cancellationToken = default);
+  Task<Result<bool>> TrySaveStateAsync<T>(string storeName, string key, T value, string? etag, CancellationToken cancellationToken = default);
   Task<Result> DeleteStateAsync(string storeName, string key);
 }
 
-
 public class DaprStateStoreService : IDaprStateStoreService {
-  private const string _errorMessage = "MaksIT.Dapr - Data provider error";
+  private const string ErrorMessage = "MaksIT.Dapr - Data provider error";
 
   private readonly DaprClient _client;
   private readonly ILogger<DaprStateStoreService> _logger;
 
-  public DaprStateStoreService(
-    ILogger<DaprStateStoreService> logger,
-    DaprClient client
-  ) {
+  public DaprStateStoreService(ILogger<DaprStateStoreService> logger, DaprClient client) {
     _logger = logger;
     _client = client;
   }
-  /// <summary>
-  /// Saves a state to a Dapr state store
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="storeName"></param>
-  /// <param name="key"></param>
-  /// <param name="value"></param>
-  /// <returns></returns>
+
   public async Task<Result> SetStateAsync<T>(string storeName, string key, T value) {
     try {
       await _client.SaveStateAsync(storeName, key, value);
       return Result.Ok();
     }
     catch (Exception ex) {
-      _logger.LogError(ex, _errorMessage);
-      return Result.InternalServerError(new[] {_errorMessage}.Concat(ex.ExtractMessages()).ToArray());
+      _logger.LogError(ex, ErrorMessage);
+      return Result.InternalServerError([ErrorMessage, .. ex.ExtractMessages()]);
     }
   }
 
-  /// <summary>
-  /// Gets a state from a Dapr state store
-  /// </summary>
-  /// <typeparam name="T"></typeparam>
-  /// <param name="storeName"></param>
-  /// <param name="key"></param>
-  /// <returns></returns>
   public async Task<Result<T?>> GetStateAsync<T>(string storeName, string key) {
     try {
       var state = await _client.GetStateAsync<T?>(storeName, key);
-      if (state == null)
+      if (state is null)
         return Result<T?>.NotFound(default, $"State from the store {storeName} with the {key} not found.");
 
       return Result<T?>.Ok(state);
     }
     catch (Exception ex) {
-      _logger.LogError(ex, _errorMessage);
-      return Result<T?>.InternalServerError(default, new[] {_errorMessage}.Concat(ex.ExtractMessages()).ToArray());
+      _logger.LogError(ex, ErrorMessage);
+      return Result<T?>.InternalServerError(default, [ErrorMessage, .. ex.ExtractMessages()]);
     }
   }
 
-  /// <summary>
-  /// Deletes a state from a Dapr state store
-  /// </summary>
-  /// <param name="storeName"></param>
-  /// <param name="key"></param>
-  /// <returns></returns>
+  public async Task<Result<(T? Value, string? ETag)>> GetStateAndETagAsync<T>(
+    string storeName,
+    string key,
+    CancellationToken cancellationToken = default) {
+    try {
+      var (value, etag) = await _client.GetStateAndETagAsync<T?>(storeName, key, cancellationToken: cancellationToken);
+      return Result<(T? Value, string? ETag)>.Ok((value, etag));
+    }
+    catch (Exception ex) {
+      _logger.LogError(ex, ErrorMessage);
+      return Result<(T? Value, string? ETag)>.InternalServerError(default, [ErrorMessage, .. ex.ExtractMessages()]);
+    }
+  }
+
+  public async Task<Result<bool>> TrySaveStateAsync<T>(
+    string storeName,
+    string key,
+    T value,
+    string? etag,
+    CancellationToken cancellationToken = default) {
+    try {
+      var saved = await _client.TrySaveStateAsync(storeName, key, value, etag ?? string.Empty, cancellationToken: cancellationToken);
+      return Result<bool>.Ok(saved);
+    }
+    catch (Exception ex) {
+      _logger.LogError(ex, ErrorMessage);
+      return Result<bool>.InternalServerError(false, [ErrorMessage, .. ex.ExtractMessages()]);
+    }
+  }
+
   public async Task<Result> DeleteStateAsync(string storeName, string key) {
     try {
       await _client.DeleteStateAsync(storeName, key);
       return Result.Ok();
     }
     catch (Exception ex) {
-      _logger.LogError(ex, _errorMessage);
-      return Result.InternalServerError([_errorMessage, .. ex.ExtractMessages()]);
+      _logger.LogError(ex, ErrorMessage);
+      return Result.InternalServerError([ErrorMessage, .. ex.ExtractMessages()]);
     }
   }
 }
