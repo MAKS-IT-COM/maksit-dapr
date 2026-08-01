@@ -16,7 +16,7 @@
       "stageLabel": "test",
       "enabled": true,
       "project": "..\\..\\..\\src\\MaksIT.Dapr.Tests",
-      "resultsDir": "..\\..\\..\\testResults"
+      "resultsDir": "..\\..\\..\\test-results"
     },
     {
       "name": "QualityGate",

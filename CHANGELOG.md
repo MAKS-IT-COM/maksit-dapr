@@ -5,14 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [2.2.0] - 2026-07-31
+
+### Added
+- **Actors facade:** `IDaprActorService` / `DaprActorService` — create typed/weak actor clients and invoke methods with `Result` outcomes; DI `RegisterActors(configure?)` and pipeline `RegisterActorsHandlers()`.
+- **Workflows facade:** `IDaprWorkflowService` / `DaprWorkflowService` — schedule, get/wait state, raise event, terminate/suspend/resume/purge, list instance IDs, get history, rerun from event; DI `RegisterWorkflows(configure?)`.
+- **Pub/Sub facade rename/expand:** `IDaprPubSubService` — publish with metadata, byte publish, bulk publish; DI `RegisterPubSub()`.
+- **State expand:** bulk get/save/delete, `TryDeleteStateAsync`, `QueryStateAsync`, `ExecuteStateTransactionAsync`, optional metadata/consistency/options on existing methods.
+- **Client facades:** invocation, binding, secrets, configuration, cryptography, sidecar (`IDapr*Service`) + `Register*` and `RegisterDaprClientFacades()`.
+- **Lock facade:** `IDaprLockService` / `DaprLockService` — `LockAsync` / `UnlockAsync` with `Result` outcomes; DI `RegisterLock()` (included in `RegisterDaprClientFacades()`).
+- **HA helpers:** `TryHoldAsync` / `DaprWorkLeaseHold` (auto-renew + `Generation` fencing), `LeasedBackgroundService`, `DaprWorkLeaseBootstrap.RunBootstrapUnderLeaseAsync`, `RegisterWorkLeases(storeName)` / `IDaprWorkLeaseOptions`.
+- **Work leases rename:** `IDaprWorkLeaseStore` / `DaprWorkLeaseStore` → `IDaprWorkLeaseService` / `DaprWorkLeaseService`.
+
+### Fixed
+- **State get miss on `state.jetstream`:** `GetStateAndETagAsync` / `GetStateAsync` treat NATS/Dapr `key not found` (often gRPC `Internal`) as empty without logging Error — so work-lease first acquire works after release or on a fresh bucket.
+- **Results hygiene:** rethrow `OperationCanceledException`; `BadRequest` for empty store/key or pubsub/topic; idempotent `DeleteStateAsync` when key is missing.
+- **DI:** `AddDaprClient` is skipped per `IServiceCollection` when `DaprClient` is already registered (no process-wide static flag).
+- **Docs:** README and CONTRIBUTING aligned with `net10.0`, RepoUtils Non-Helm bats, and current package version.
+
+### Changed
+- **Work leases layout:** all HA lease types live under `Services/WorkLease/` (`MaksIT.Dapr.Services.WorkLease`) — `DaprWorkLease`, `DaprWorkLeaseHold` / bootstrap / `LeasedBackgroundService`, `DaprWorkLeaseService`, `IDaprWorkLeaseOptions`, `IDaprRuntimeInstanceId`.
+- **`GetStateAsync` miss:** returns `Ok(null)` instead of `NotFound` (aligned with ETag get and typical MaksIT optional-read pattern). Check `Value is null` for absence; `!IsSuccess` means infra failure.
+- **CancellationToken:** optional `cancellationToken` on facade APIs; lease `ReleaseAsync` forwards it to delete.
+- **Invocation:** `DaprInvocationService` uses `DaprClient.CreateInvokableHttpClient` (HTTP POST + JSON) instead of obsolete `InvokeMethodAsync(appId, method…)` helpers.
+- **Workflows DI:** `RegisterWorkflows()` calls parameterless `AddDaprWorkflow()` when no configure delegate is passed (SDK 1.18 auto-discovers workflows/activities).
+- **Dependencies:** Dapr packages bumped to `1.18.5`.
+- **Docs:** README documents each facade (when to use / when not, DI, API), including lock vs work-lease guidance, and a short coordination-pattern chooser.
+- **XML docs** on public APIs; `GenerateDocumentationFile` enabled.
+- Removed obsolete `assets/badges` pack items (CoverageBadges uses shields.io).
+- Package version **2.2.0**.
+
+### Removed
+- Custom pub/sub accept types and `IDaprPubSubWorkHandler` (`DaprPubSubAcceptOutcome`, `DaprPubSubAcceptResult`, `DaprPubSubAck`). Topic controllers should return `MaksIT.Results.Result` via `ToActionResult()` directly (`Ok` ACK, `ServiceUnavailable` retry, `BadRequest` drop).
+- `IDaprPublisherService` / `RegisterPublisher` (use `IDaprPubSubService` / `RegisterPubSub`).
+- Leftover `DaprWorkLeaseStore` and `PubSub/DaprPubSubWork` types (no obsolete shims).
+- `DaprFacadeGuard` helper (inline try/catch + validation in each service).
+
 ## [2.1.0] - 2026-07-30
 
 ### Added
-- **HA work leases via Dapr state:** `IDaprWorkLeaseStore` / `DaprWorkLeaseStore` (acquire, renew, release, get) using ETag concurrency — broker-agnostic (NATS KV / Postgres / other state Component).
+- **HA work leases via Dapr state:** `IDaprWorkLeaseService` / `DaprWorkLeaseService` (acquire, renew, release, get) using ETag concurrency — broker-agnostic (NATS KV / Postgres / other state Component).
 - **State ETag API:** `GetStateAndETagAsync` and `TrySaveStateAsync` on `IDaprStateStoreService`.
 - **Runtime instance id:** `IDaprRuntimeInstanceId` / `DaprRuntimeInstanceIdProvider` (`POD_NAME` in Kubernetes).
 - **Pub/sub worker helpers:** `IDaprPubSubWorkHandler<T>`, `DaprPubSubAcceptOutcome` / `DaprPubSubAcceptResult`, `DaprPubSubAck` (HTTP ACK/NAK mapping).
-- DI: `RegisterWorkLeases()` registers state store + lease store + instance id.
+- DI: `RegisterWorkLeases()` registers state store + work-lease service + instance id.
 
 ### Changed
 - Package version **2.1.0**.

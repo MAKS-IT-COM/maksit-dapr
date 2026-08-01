@@ -14,7 +14,7 @@ Thank you for your interest in contributing to `MaksIT.Dapr`.
 
 ### Prerequisites
 
-- .NET 8 SDK or later
+- .NET 10 SDK
 - Git
 - PowerShell 7+ (recommended for utility scripts)
 
@@ -27,9 +27,19 @@ dotnet build MaksIT.Dapr.slnx
 
 ### Test
 
+Prefer the RepoUtils test engine (coverage + README shields.io badges):
+
+```powershell
+pwsh -File .\utils\engines\test\Invoke-TestEngine.ps1
+```
+
+Or double-click `utils\Invoke-TestEngine.bat`.
+
+Quick local run:
+
 ```bash
 cd src
-dotnet test MaksIT.Dapr.Tests
+dotnet test MaksIT.Dapr.slnx
 ```
 
 ## Commit Message Format
@@ -47,7 +57,14 @@ Use:
 | `(feature):` | New feature or enhancement |
 | `(bugfix):` | Bug fix |
 | `(refactor):` | Refactoring without behavior change |
-| `(chore):` | Maintenance tasks (dependencies, tooling, docs) |
+| `(perf):` | Performance improvement |
+| `(test):` | Tests only |
+| `(docs):` | Documentation |
+| `(build):` | Build / packaging |
+| `(ci):` | CI configuration |
+| `(style):` | Formatting / style |
+| `(chore):` | Maintenance tasks (dependencies, tooling) |
+| `(revert):` | Revert a previous change |
 
 ### Guidelines
 
@@ -57,10 +74,11 @@ Use:
 
 ## Pull Request Checklist
 
-1. Ensure build and tests pass.
+1. Ensure build and tests pass (RepoUtils test engine when possible).
 2. Update `README.md` if behavior or usage changed.
 3. Update `CHANGELOG.md` under the target version.
-4. Keep changes scoped and explain rationale in the PR description.
+4. If coverage changed, refresh README shields.io badges via the test engine.
+5. Keep changes scoped and explain rationale in the PR description.
 
 ## Versioning
 
@@ -92,7 +110,7 @@ Builds, tests, packs, and publishes to NuGet and GitHub release flows.
 pwsh -File .\utils\engines\release\Invoke-ReleasePackage.ps1
 ```
 
-Or run `utils\Invoke-ReleasePackage-Single.bat` (or `-HA.bat` when Helm deploy is wired).
+Or double-click `utils\Invoke-ReleasePackage.bat`.
 
 Prerequisites:
 
@@ -101,6 +119,8 @@ Prerequisites:
 - Environment variables **`NuGet`** and **`GitHub`** (logical names in `scriptSettings.json`)
 
 Configuration: `utils/engines/release/scriptSettings.json`
+
+Public GitHub releases target `https://github.com/MAKS-IT-COM/maksit-core-dapr` (see release `scriptSettings.json`).
 
 ### Update repo utilities
 

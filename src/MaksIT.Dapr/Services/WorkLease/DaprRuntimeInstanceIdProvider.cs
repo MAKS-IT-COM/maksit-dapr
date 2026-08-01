@@ -1,7 +1,13 @@
-namespace MaksIT.Dapr.Services;
+namespace MaksIT.Dapr.Services.WorkLease;
 
-/// <summary>Stable id for this process/pod (lease holder).</summary>
+
+/// <summary>
+/// Stable id for this process/pod (lease holder).
+/// </summary>
 public interface IDaprRuntimeInstanceId {
+  /// <summary>
+  /// Identifier used as lease <c>HolderId</c>.
+  /// </summary>
   string InstanceId { get; }
 }
 
@@ -9,6 +15,7 @@ public interface IDaprRuntimeInstanceId {
 /// Prefers <c>POD_NAME</c> in Kubernetes; otherwise host name + process id.
 /// </summary>
 public sealed class DaprRuntimeInstanceIdProvider : IDaprRuntimeInstanceId {
+  /// <inheritdoc />
   public string InstanceId { get; } = Build();
 
   private static string Build() {
