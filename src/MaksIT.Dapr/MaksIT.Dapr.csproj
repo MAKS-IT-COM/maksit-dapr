@@ -1,17 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- NuGet package metadata -->
     <PackageId>MaksIT.Dapr</PackageId>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Authors>Maksym Sadovnychyy</Authors>
     <Company>MAKS-IT</Company>
     <Product>MaksIT.Dapr</Product>
-    <Description>MaksIT.Dapr is a facade library for Dapr.</Description>
+    <Description>MaksIT.Dapr Result facades for Dapr pub/sub, state, invocation, bindings, secrets, configuration, cryptography, sidecar, lock, actors, workflows, and HA work-lease helpers.</Description>
     <PackageTags>dotnet;dapr;</PackageTags>
     <RepositoryUrl>https://github.com/MAKS-IT-COM/maksit-core-dapr</RepositoryUrl>
     <License>MIT</License>
@@ -21,9 +22,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.18.4" />
-    <PackageReference Include="Dapr.AspNetCore" Version="1.18.4" />
-    <PackageReference Include="Dapr.Workflow" Version="1.18.4" />
+    <PackageReference Include="Dapr.Actors.AspNetCore" Version="1.18.5" />
+    <PackageReference Include="Dapr.AspNetCore" Version="1.18.5" />
+    <PackageReference Include="Dapr.Workflow" Version="1.18.5" />
     <PackageReference Include="MaksIT.Core" Version="1.6.8" />
     <PackageReference Include="MaksIT.Results" Version="2.0.3" />
   </ItemGroup>
@@ -32,10 +33,6 @@
     <None Include="..\..\LICENSE.md" Pack="true" PackagePath="\" Link="LICENSE.md" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" Link="README.md" />
     <None Include="..\..\CHANGELOG.md" Pack="true" PackagePath="\" Link="CHANGELOG.md" />
-
-    <None Include="..\..\assets\badges\**\*" Link="assets\badges\%(RecursiveDir)%(Filename)%(Extension)">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
