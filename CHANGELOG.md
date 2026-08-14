@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-08-14
+
+### Changed
+- **Dependencies:** `MaksIT.Core` `1.6.9`, `MaksIT.Results` `2.0.4`; test SDK `Microsoft.NET.Test.Sdk` `18.9.0`.
+- **RepoUtils:** synced Community Non-Helm utils — plugin success checks use exact `$true` (CLI stdout no longer masks failures), `Invoke-ExternalCommand` defaults to throw-on-error with soft callers opting out, plugin helper discovery by group directories.
+- Package version **2.2.1**.
+
+### Removed
+- `Update-RepoUtils.bat` and `utils/tools/Update-RepoUtils/` (local-copy sync only).
+
 ## [2.2.0] - 2026-07-31
 
 ### Added
