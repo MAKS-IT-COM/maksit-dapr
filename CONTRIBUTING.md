@@ -35,6 +35,8 @@ pwsh -File .\utils\engines\test\Invoke-TestEngine.ps1
 
 Or double-click `utils\Invoke-TestEngine.bat`.
 
+Tests run under **Microsoft Testing Platform** (`src/global.json` `test.runner`) with **xunit.v3** and **coverlet.MTP**.
+
 Quick local run:
 
 ```bash
