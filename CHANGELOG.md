@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.2] - 2026-08-16
+
+### Changed
+- **Tests:** migrate to **xunit.v3** **4.0.0** + **Microsoft Testing Platform** only (`src/global.json` `test.runner`; no VSTest / **coverlet.collector** / **Microsoft.NET.Test.Sdk** / **xunit.runner.visualstudio**). Use **coverlet.MTP**; **TestRunner** always uses `--coverlet`.
+- Package version **2.2.2**.
+
 ## [2.2.1] - 2026-08-14
 
 ### Changed

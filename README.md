@@ -1,8 +1,8 @@
 # MaksIT.Dapr
 
-![Line Coverage](https://img.shields.io/badge/Line%20Coverage-41.9%25-yellowgreen)
-![Branch Coverage](https://img.shields.io/badge/Branch%20Coverage-40.7%25-yellowgreen)
-![Method Coverage](https://img.shields.io/badge/Method%20Coverage-59.5%25-yellowgreen)
+![Line Coverage](https://img.shields.io/badge/Line%20Coverage-41.8%25-yellowgreen)
+![Branch Coverage](https://img.shields.io/badge/Branch%20Coverage-40.9%25-yellowgreen)
+![Method Coverage](https://img.shields.io/badge/Method%20Coverage-58.9%25-yellowgreen)
 
 NuGet facade over [Dapr](https://dapr.io/) for ASP.NET Core: pub/sub, state, invocation, bindings, secrets, configuration, cryptography, sidecar, lock, HA work leases, actors, and workflows — all with `MaksIT.Results` outcomes.
 
@@ -76,7 +76,7 @@ dotnet add package MaksIT.Dapr
 Or in your `.csproj`:
 
 ```xml
-<PackageReference Include="MaksIT.Dapr" Version="2.2.1" />
+<PackageReference Include="MaksIT.Dapr" Version="2.2.2" />
 ```
 
 ## Registering services
