@@ -76,7 +76,7 @@ dotnet add package MaksIT.Dapr
 Or in your `.csproj`:
 
 ```xml
-<PackageReference Include="MaksIT.Dapr" Version="2.2.2" />
+<PackageReference Include="MaksIT.Dapr" Version="2.2.3" />
 ```
 
 ## Registering services

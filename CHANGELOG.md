@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.2.3] - 2026-10-27
+
+### Changed
+- **Dependencies:** Dapr packages `1.19.0`, `MaksIT.Core` `1.6.14`, `MaksIT.Results` `2.0.6`; tests `xunit.v3` `4.0.2`, `coverlet.MTP` `10.1.0`.
+- **RepoUtils:** synced Community Non-Helm utils — plugin discovery/helpers, Vault support, `CleanupArtifacts` (replaces `DotNetCleanupArtifacts`), ContainerRegistry JSON catalog (PascalCase Harbor / InCluster keys); removed unused Npm plugin group.
+- **CI:** NuGet.org publish via GitHub Actions Trusted Publishing (`.github/workflows/publish-nuget.yml` on `v*` tags); release engine no longer wires `DotNetNuGet`.
+- Package version **2.2.3**.
 
 ## [2.2.2] - 2026-08-16
 
@@ -91,3 +99,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Legacy root-level release scripts (`Release-NuGetPackage.*`) in favor of the `utils/Release-NuGetPackage/` flow.
+
